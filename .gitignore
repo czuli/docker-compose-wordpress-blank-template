@@ -1,0 +1,15 @@
+*.log
+wp-content/
+wp-data/
+
+
+.DS_Store
+.idea/
+
+.vscode/
+*.code-workspace
+
+node_modules/
+all.min.js
+*.css
+*.txt
