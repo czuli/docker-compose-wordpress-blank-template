@@ -7,7 +7,7 @@ services:
       - ${IP}:80:80 # change ip if required
     volumes:
       - ./wp-content:/var/www/html/wp-content
-      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./config/php.conf.ini:/usr/local/etc/php/conf.d/uploads.ini
     # - ./plugin-name/trunk/:/var/www/html/wp-content/plugins/plugin-name # Plugin development
     # - ./THEME-name:/var/www/html/wp-content/themes/THEME-name
     environment:
