@@ -8,6 +8,8 @@ services:
     volumes:
       - ./wp-content:/var/www/html/wp-content
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    # - ./plugin-name/trunk/:/var/www/html/wp-content/plugins/plugin-name # Plugin development
+    # - ./THEME-name:/var/www/html/wp-content/themes/THEME-name
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_NAME: "${DB_NAME}"
@@ -18,9 +20,6 @@ services:
 
   db:
     image: mysql:latest
-    volumes:
-      - db_data:/var/lib/mysql
-    restart: "no"
     ports:
       - ${IP}:3306:3306 # change ip if required
     command: [
@@ -33,6 +32,24 @@ services:
     environment:
       MYSQL_DATABASE: "${DB_NAME}"
       MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+
+  mysql-cron-backup:
+    image: fradelg/mysql-cron-backup
+    depends_on:
+      - db
+    volumes:
+      - ./backup:/backup
+    environment:
+      - MYSQL_DB=wordpress
+      - MYSQL_HOST=db
+      - MYSQL_USER=root
+      - MYSQL_PASS=password
+      - MAX_BACKUPS=2
+      - INIT_RESTORE_LATEST=1
+      - INIT_BACKUP= 0
+
+      - CRON_TIME=0 */1 * * *
+    restart: "no"
 
   adminer:
     image: adminer
