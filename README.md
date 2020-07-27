@@ -11,5 +11,3 @@ Odpalasz wp z terminala z polecenia:
 aby uruchomilo sie w tle dodaj -d 
 
 `docker-compose up -d`
-
-
